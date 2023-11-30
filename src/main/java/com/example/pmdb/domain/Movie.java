@@ -1,9 +1,7 @@
 package com.example.pmdb.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +11,8 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Movie {
 
     @Id
@@ -40,7 +40,4 @@ public class Movie {
 
     @Column(name = "poster_url")
     private String posterUrl;
-
-//    public Movie() {
-//    }
 }
