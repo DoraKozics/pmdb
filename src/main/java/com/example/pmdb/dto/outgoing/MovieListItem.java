@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MovieListItem {
 
+    private Long id;
+
     private String title;
 
     private String director;
@@ -15,6 +17,7 @@ public class MovieListItem {
     private Integer year;
 
     public MovieListItem(Movie movie) {
+        this.id = movie.getId();
         this.title = movie.getTitle();
         this.director = movie.getDirector();
         this.year = movie.getYear();

@@ -8,13 +8,15 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { MovieListComponent } from './movie-list/movie-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { MovieFormComponent } from './movie-form/movie-form.component';
+import { MovieDetailsComponent } from './movie-details/movie-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MovieListComponent,
     NavbarComponent,
-    MovieFormComponent
+    MovieFormComponent,
+    MovieDetailsComponent
   ],
   imports: [
     BrowserModule,

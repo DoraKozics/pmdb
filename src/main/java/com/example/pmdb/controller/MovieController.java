@@ -1,6 +1,7 @@
 package com.example.pmdb.controller;
 
 import com.example.pmdb.dto.incoming.CreateMovieCommand;
+import com.example.pmdb.dto.outgoing.MovieDetailsItem;
 import com.example.pmdb.dto.outgoing.MovieListItem;
 import com.example.pmdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,21 @@ public class MovieController {
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<MovieDetailsItem> getById(@PathVariable Long id) {
+        MovieDetailsItem movie = movieService.getMovieDetails(id);
+        return new ResponseEntity<>(movie, HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<Void> createMovie(@RequestBody CreateMovieCommand command) {
         movieService.save(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
+        movieService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

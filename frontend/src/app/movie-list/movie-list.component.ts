@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MovieService} from "../service/movie.service";
 import {MovieListItemModel} from "../model/movie-list-item.model";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-movie-list',
@@ -11,7 +12,7 @@ export class MovieListComponent implements OnInit {
 
   movies: MovieListItemModel[] = [];
 
-  constructor(private movieService: MovieService) {
+  constructor(private movieService: MovieService, private router: Router) {
   }
 
   ngOnInit() {
@@ -20,4 +21,13 @@ export class MovieListComponent implements OnInit {
     })
   }
 
+  onDetailsClick = (id: number) => {
+    this.router.navigate(['details/' + id]);
+  }
+
+  onDeleteClick = (id: number) => {
+    this.movieService.deleteMovie(id).subscribe({
+      next: () => location.reload()
+    });
+  }
 }
