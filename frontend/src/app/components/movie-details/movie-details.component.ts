@@ -17,7 +17,6 @@ export class MovieDetailsComponent {
       params => this.movieService.getMovieById(Number(params.get('id'))).subscribe(
         movie => {
           this.movieDetails = movie;
-          console.log(this.movieDetails)
         }
       ))
   }

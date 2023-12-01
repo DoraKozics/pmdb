@@ -1,20 +1,45 @@
-<form>
+<form [formGroup]="form">
   <h2>Movie form</h2>
   <div class="mb-3">
     <label for="title" class="form-label">Title:</label>
-    <input type="text" class="form-control" id="title">
+    <input
+      type="text"
+      class="form-control"
+      id="title"
+      formControlName="title"
+      placeholder="Title"
+    >
   </div>
   <div class="mb-3">
     <label for="director" class="form-label">Director:</label>
-    <input type="text" class="form-control" id="director">
+    <input
+      type="text"
+      class="form-control"
+      id="director"
+      formControlName="director"
+      placeholder="Director"
+    >
   </div>
   <div class="mb-3">
     <label for="year" class="form-label">Year:</label>
-    <input type="number" class="form-control" id="year">
+    <input
+      type="number"
+      class="form-control"
+      id="year"
+      formControlName="year"
+      placeholder="Year"
+    >
   </div>
   <div class="mb-3">
     <label for="genres">Genres:</label>
-    <select class="form-select mb-3" size="{{genres.length}}" name="genres" id="genres" multiple>
+    <select
+      class="form-control form-select mb-3"
+      size="{{genres.length + 1}}"
+      name="genres"
+      id="genres"
+      multiple
+      formControlName="genres">
+      <option value=null disabled>Please choose maximum 3 genres:</option>
       <option *ngFor="let genre of genres" value="{{genre.name}}">{{genre.displayName}}</option>
     </select>
 
@@ -23,12 +48,28 @@
     <p>Rating: </p>
     <div class="form-check" *ngFor="let rating of ratings">
       <label for="{{rating.name}}" class="form-check-label">{{rating.displayName}}</label>
-      <input type="radio" class="form-check-input" name="rating" id="{{rating.name}}" value="{{rating.name}}">
+      <input
+        type="radio"
+        class="form-check-input"
+        name="rating"
+        id="{{rating.name}}"
+        value="{{rating.name}}"
+        formControlName="rating">
     </div>
   </div>
   <div class="mb-3">
     <label for="posterUrl" class="form-label">Poster URL:</label>
-    <input type="text" class="form-control" id="posterUrl">
+    <input
+      type="text"
+      class="form-control"
+      id="posterUrl"
+      formControlName="posterUrl"
+      placeholder="Poster URL"
+    >
   </div>
-  <button type="submit" class="btn btn-primary" (click)="onSubmitClick()">Submit</button>
+  <button
+    type="submit"
+    [disabled]="form.invalid"
+    class="btn btn-primary"
+    (click)="onSubmitClick()">Submit</button>
 </form>

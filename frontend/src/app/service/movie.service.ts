@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {MovieListItemModel} from "../model/movie-list-item.model";
 import {MovieDetailsModel} from "../model/movie-details.model";
 import {FormInitDataModel} from "../model/form-init-data.model";
+import {MovieFormModel} from "../model/movie-form.model";
 
 @Injectable({providedIn: "root"})
 export class MovieService {
@@ -27,5 +28,9 @@ export class MovieService {
 
   fetchFormInitData = (): Observable<FormInitDataModel> => {
     return this.http.get<FormInitDataModel>(this.BASE_URL + '/formData');
+  }
+
+  sendMovieData = (data: MovieFormModel): Observable<any> => {
+    return this.http.post(this.BASE_URL, data);
   }
 }
