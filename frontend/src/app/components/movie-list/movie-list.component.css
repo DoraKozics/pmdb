@@ -3,3 +3,12 @@ table {
   margin-top: 20px;
   width: 90%;
 }
+
+th {
+  background-color: #5c6165;
+  color: white;
+}
+
+button {
+  margin-left: 5px;
+}

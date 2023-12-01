@@ -16,6 +16,7 @@
     <td>{{movie.year}}</td>
     <td>
       <button type="button" class="btn btn-primary" (click)="onDetailsClick(movie.id)">Details</button>
+      <button type="button" class="btn btn-secondary" (click)="onEditClick(movie.id)">Edit</button>
       <button type="button" class="btn btn-danger" (click)="onDeleteClick(movie.id)">Delete</button>
     </td>
   </tr>

@@ -7,8 +7,7 @@
       class="form-control"
       id="title"
       formControlName="title"
-      placeholder="Title"
-    >
+      placeholder="Title">
   </div>
   <div class="mb-3">
     <label for="director" class="form-label">Director:</label>
@@ -68,8 +67,17 @@
     >
   </div>
   <button
+    *ngIf="!detailsToUpdate"
     type="submit"
     [disabled]="form.invalid"
     class="btn btn-primary"
-    (click)="onSubmitClick()">Submit</button>
+    (click)="onSubmitClick()">Submit
+  </button>
+  <button
+    *ngIf="detailsToUpdate"
+    type="submit"
+    [disabled]="form.invalid"
+    class="btn btn-primary"
+    (click)="onSubmitChangesClick()">Submit changes
+  </button>
 </form>

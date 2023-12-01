@@ -1,6 +1,6 @@
 import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {MovieListItemModel} from "../model/movie-list-item.model";
 import {MovieDetailsModel} from "../model/movie-details.model";
 import {FormInitDataModel} from "../model/form-init-data.model";
@@ -10,6 +10,8 @@ import {MovieFormModel} from "../model/movie-form.model";
 export class MovieService {
 
   private BASE_URL: string = 'http://localhost:8080/api/movies';
+  movieId?: number;
+  resetForm = new Subject();
 
   constructor(private http: HttpClient) {
   }
@@ -32,5 +34,9 @@ export class MovieService {
 
   sendMovieData = (data: MovieFormModel): Observable<any> => {
     return this.http.post(this.BASE_URL, data);
+  }
+
+  updateMovieData = (data: MovieFormModel): Observable<any> => {
+    return this.http.put(this.BASE_URL, data);
   }
 }

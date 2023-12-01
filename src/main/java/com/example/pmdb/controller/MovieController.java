@@ -1,6 +1,7 @@
 package com.example.pmdb.controller;
 
 import com.example.pmdb.dto.incoming.CreateMovieCommand;
+import com.example.pmdb.dto.incoming.UpdateMovieCommand;
 import com.example.pmdb.dto.outgoing.*;
 import com.example.pmdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +52,11 @@ public class MovieController {
         List<RatingOption> ratings = movieService.getAllRatings();
         FormInitData formData = new FormInitData(genres, ratings);
         return new ResponseEntity<>(formData, HttpStatus.OK);
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updateMovie(@RequestBody UpdateMovieCommand command) {
+        movieService.update(command);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
