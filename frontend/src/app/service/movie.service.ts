@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {MovieListItemModel} from "../model/movie-list-item.model";
 import {MovieDetailsModel} from "../model/movie-details.model";
+import {FormInitDataModel} from "../model/form-init-data.model";
 
 @Injectable({providedIn: "root"})
 export class MovieService {
@@ -22,5 +23,9 @@ export class MovieService {
 
   deleteMovie = (id: number): Observable<any> => {
     return this.http.delete(this.BASE_URL + '/' + id);
+  }
+
+  fetchFormInitData = (): Observable<FormInitDataModel> => {
+    return this.http.get<FormInitDataModel>(this.BASE_URL + '/formData');
   }
 }

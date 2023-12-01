@@ -1,0 +1,24 @@
+.poster-container {
+  position: relative;
+  text-align: center;
+  padding: 20px;
+}
+
+.poster-container img {
+  filter: brightness(30%);
+  max-height: 600px;
+  width: auto;
+}
+
+.details-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  padding-bottom: 50px;
+}

@@ -1,0 +1,16 @@
+<div *ngIf="movieDetails">
+  <div class="poster-container">
+    <img [src]="movieDetails.posterUrl ? movieDetails.posterUrl : 'assets/no-poster.jpg'"
+         alt="No poster url available"
+         title="Movie poster"/>
+  </div>
+  <div class="details-container">
+    <h1>{{movieDetails.title}}</h1>
+    <p>{{movieDetails.year}}</p>
+    <p>
+      <span *ngFor="let genre of movieDetails?.genres; let isLast = last">{{genre}}{{isLast ? '' : ', '}}</span>
+    </p>
+    <p>Directed by <strong>{{movieDetails.director}}</strong></p>
+    <p>{{movieDetails.rating}}</p>
+  </div>
+</div>

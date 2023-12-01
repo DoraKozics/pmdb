@@ -1,8 +1,7 @@
 package com.example.pmdb.controller;
 
 import com.example.pmdb.dto.incoming.CreateMovieCommand;
-import com.example.pmdb.dto.outgoing.MovieDetailsItem;
-import com.example.pmdb.dto.outgoing.MovieListItem;
+import com.example.pmdb.dto.outgoing.*;
 import com.example.pmdb.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,5 +43,13 @@ public class MovieController {
     public ResponseEntity<Void> deleteMovie(@PathVariable Long id) {
         movieService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/formData")
+    public ResponseEntity<FormInitData> getFormInitData() {
+        List<GenreOption> genres = movieService.getAllGenres();
+        List<RatingOption> ratings = movieService.getAllRatings();
+        FormInitData formData = new FormInitData(genres, ratings);
+        return new ResponseEntity<>(formData, HttpStatus.OK);
     }
 }
