@@ -5,6 +5,7 @@ import {RatingOptionItemModel} from "../../model/rating-option-item.model";
 import {MovieService} from "../../service/movie.service";
 import {Router} from "@angular/router";
 import {MovieFormModel} from "../../model/movie-form.model";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-movie-form',
@@ -93,7 +94,18 @@ export class MovieFormComponent implements OnInit {
     this.movieService.sendMovieData(data).subscribe(
       () => {
         this.router.navigate(['movies'])
-      })
+      },
+      error => {
+        if (error instanceof HttpErrorResponse && error.status === 400) {
+          for (let validationError of error.error.fieldErrors) {
+            const formControl = this.form.get(validationError.field);
+            if (formControl) {
+              formControl.setErrors({serverError: validationError.message})
+            }
+          }
+        }
+      }
+    )
   }
 
   updateMovieData(data: MovieFormModel, movieId: number) {

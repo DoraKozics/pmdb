@@ -43,7 +43,7 @@
       id="year"
       formControlName="year"
       placeholder="Year"
-      [ngClass]="{'is-invalid': form.get('year')?.invalid && form.get('year')?.touched}"
+      [ngClass]="{'is-invalid': form.get('year')?.invalid && form.get('year')?.touched || form.get('year')?.errors?.['serverError']}"
     >
     <small *ngIf="form.get('year')?.invalid && form.get('year')?.touched"
            class="text-danger">

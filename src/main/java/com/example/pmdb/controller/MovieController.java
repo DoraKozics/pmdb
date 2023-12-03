@@ -4,9 +4,12 @@ import com.example.pmdb.dto.incoming.CreateMovieCommand;
 import com.example.pmdb.dto.incoming.UpdateMovieCommand;
 import com.example.pmdb.dto.outgoing.*;
 import com.example.pmdb.service.MovieService;
+import com.example.pmdb.validator.CreateMovieCommandValidator;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,9 +20,18 @@ public class MovieController {
 
     private final MovieService movieService;
 
+    private final CreateMovieCommandValidator validator;
+
     @Autowired
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService,
+                           CreateMovieCommandValidator createMovieCommandValidator) {
         this.movieService = movieService;
+        this.validator = createMovieCommandValidator;
+    }
+
+    @InitBinder("createMovieCommand")
+    protected void initBinder(WebDataBinder binder) {
+        binder.addValidators(validator);
     }
 
     @GetMapping
@@ -35,7 +47,7 @@ public class MovieController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createMovie(@RequestBody CreateMovieCommand command) {
+    public ResponseEntity<Void> createMovie(@RequestBody @Valid CreateMovieCommand command) {
         movieService.save(command);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
