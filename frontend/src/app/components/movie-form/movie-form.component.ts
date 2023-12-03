@@ -61,7 +61,7 @@ export class MovieFormComponent implements OnInit {
             title: response.title,
             director: response.director,
             year: response.year,
-            // genres: [response.genres],
+            genres: response.genres,
             rating: response.rating,
             posterUrl: response.posterUrl
           });

@@ -1,50 +1,78 @@
 <form [formGroup]="form">
   <h2>Movie form</h2>
   <div class="mb-3">
-    <label for="title" class="form-label">Title:</label>
+    <label
+      for="title"
+      class="form-label"
+      [ngClass]="{'text-danger': form.get('title')?.invalid && form.get('title')?.touched}"
+    >Title:</label>
     <input
       type="text"
       class="form-control"
       id="title"
       formControlName="title"
-      placeholder="Title">
+      placeholder="Title"
+      [ngClass]="{'is-invalid': form.get('title')?.invalid && form.get('title')?.touched}">
+    <small *ngIf="form.get('title')?.invalid && form.get('title')?.touched"
+           class="text-danger">
+      Please enter the title
+    </small>
   </div>
   <div class="mb-3">
-    <label for="director" class="form-label">Director:</label>
+    <label for="director" class="form-label"
+           [ngClass]="{'text-danger': form.get('director')?.invalid && form.get('director')?.touched}">Director:</label>
     <input
       type="text"
       class="form-control"
       id="director"
       formControlName="director"
       placeholder="Director"
+      [ngClass]="{'is-invalid': form.get('director')?.invalid && form.get('director')?.touched}"
     >
+    <small *ngIf="form.get('director')?.invalid && form.get('director')?.touched"
+           class="text-danger">
+      Please enter the director
+    </small>
   </div>
   <div class="mb-3">
-    <label for="year" class="form-label">Year:</label>
+    <label for="year" class="form-label"
+           [ngClass]="{'text-danger': form.get('year')?.invalid && form.get('year')?.touched}">Year:</label>
     <input
       type="number"
       class="form-control"
       id="year"
       formControlName="year"
       placeholder="Year"
+      [ngClass]="{'is-invalid': form.get('year')?.invalid && form.get('year')?.touched}"
     >
+    <small *ngIf="form.get('year')?.invalid && form.get('year')?.touched"
+           class="text-danger">
+      Please enter the release year
+    </small>
   </div>
   <div class="mb-3">
-    <label for="genres">Genres:</label>
+    <label for="genres"
+           [ngClass]="{'text-danger': form.get('genres')?.invalid && form.get('genres')?.touched}"
+    >Genres:</label>
     <select
       class="form-control form-select mb-3"
       size="{{genres.length + 1}}"
       name="genres"
       id="genres"
       multiple
-      formControlName="genres">
+      formControlName="genres"
+      [ngClass]="{'is-invalid': form.get('genres')?.invalid && form.get('genres')?.touched}">
       <option value=null disabled>Please choose maximum 3 genres:</option>
       <option *ngFor="let genre of genres" value="{{genre.name}}">{{genre.displayName}}</option>
     </select>
-
+    <small *ngIf="form.get('genres')?.invalid && form.get('genres')?.touched"
+           class="text-danger">
+      Please choose maximum 3 genres
+    </small>
   </div>
   <div class="mb-3">
-    <p>Rating: </p>
+    <p [ngClass]="{'text-danger': form.get('rating')?.invalid && form.get('rating')?.touched}"
+    >Rating: </p>
     <div class="form-check" *ngFor="let rating of ratings">
       <label for="{{rating.name}}" class="form-check-label">{{rating.displayName}}</label>
       <input
@@ -53,8 +81,13 @@
         name="rating"
         id="{{rating.name}}"
         value="{{rating.name}}"
-        formControlName="rating">
+        formControlName="rating"
+        [ngClass]="{'is-invalid': form.get('rating')?.invalid && form.get('rating')?.touched}">
     </div>
+    <small *ngIf="form.get('rating')?.invalid"
+           class="text-danger">
+      Please choose the rating
+    </small>
   </div>
   <div class="mb-3">
     <label for="posterUrl" class="form-label">Poster URL:</label>
