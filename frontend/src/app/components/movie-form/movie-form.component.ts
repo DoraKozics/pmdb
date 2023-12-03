@@ -3,8 +3,8 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {GenreOptionItemModel} from "../../model/genre-option-item.model";
 import {RatingOptionItemModel} from "../../model/rating-option-item.model";
 import {MovieService} from "../../service/movie.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {MovieDetailsModel} from "../../model/movie-details.model";
+import {Router} from "@angular/router";
+import {MovieFormModel} from "../../model/movie-form.model";
 
 @Component({
   selector: 'app-movie-form',
@@ -17,12 +17,10 @@ export class MovieFormComponent implements OnInit {
   genres: GenreOptionItemModel[] = [];
   ratings: RatingOptionItemModel[] = [];
   movieId: number | undefined;
-  detailsToUpdate: MovieDetailsModel | null = null;
 
   constructor(private formBuilder: FormBuilder,
               private movieService: MovieService,
-              private router: Router,
-              private activatedRoute: ActivatedRoute) {
+              private router: Router) {
 
     this.form = this.formBuilder.group({
       title: [null, Validators.required],
@@ -33,9 +31,12 @@ export class MovieFormComponent implements OnInit {
       posterUrl: [null]
     })
 
-    this.activatedRoute.params.subscribe(() => {
-      this.movieId = this.movieService.movieId;
-    })
+    this.movieService.resetForm.subscribe(
+      () => {
+        this.movieId = undefined;
+        this.form.reset();
+      },
+    );
   }
 
   ngOnInit(): void {
@@ -43,34 +44,29 @@ export class MovieFormComponent implements OnInit {
       value => {
         this.ratings = value.ratingList;
         this.genres = value.genreList;
+        this.movieId = this.movieService.movieId;
 
         if (this.movieId) {
-          this.movieService.getMovieById(this.movieId).subscribe((dataToUpdate) => {
-            this.detailsToUpdate = {
-              id: dataToUpdate.id,
-              title: dataToUpdate.title,
-              director: dataToUpdate.director,
-              year: dataToUpdate.year,
-              genres: dataToUpdate.genres,
-              rating: dataToUpdate.rating,
-              posterUrl: dataToUpdate.rating
-            };
-
-            this.form.patchValue({
-              title: [dataToUpdate.title],
-              director: [dataToUpdate.director],
-              year: [dataToUpdate.year],
-              genres: [dataToUpdate.genres],
-              rating: [dataToUpdate.rating],
-              posterUrl: [dataToUpdate.posterUrl]
-            });
-
-            this.movieService.movieId = undefined;
-            this.movieId = undefined;
-          })
+          this.getMovieDetails(this.movieId);
         }
       }
     )
+  }
+
+  getMovieDetails = (id: number) => {
+    this.movieService.getMovieById(id).subscribe(
+      (response) => {
+        if (response) {
+          this.form.patchValue({
+            title: response.title,
+            director: response.director,
+            year: response.year,
+            // genres: [response.genres],
+            rating: response.rating,
+            posterUrl: response.posterUrl
+          });
+        }
+      })
   }
 
   customGenreValidator = (control: FormControl): { tooMany: boolean } | null => {
@@ -85,18 +81,26 @@ export class MovieFormComponent implements OnInit {
   }
 
   onSubmitClick = () => {
-    this.movieService.sendMovieData(this.form.value).subscribe(
+    const data = {...this.form.value};
+    if (this.movieId) {
+      this.updateMovieData(data, this.movieId);
+    } else {
+      this.createMovie(data);
+    }
+  }
+
+  createMovie(data: MovieFormModel) {
+    this.movieService.sendMovieData(data).subscribe(
       () => {
         this.router.navigate(['movies'])
       })
   }
 
-  onSubmitChangesClick() {
-    this.movieService.updateMovieData(this.form.value).subscribe(
-      (value) => {
-        console.log(value)
+  updateMovieData(data: MovieFormModel, movieId: number) {
+    data.id = movieId;
+    this.movieService.updateMovieData(data).subscribe(
+      () => {
         this.router.navigate(['movies']);
-        this.form.reset();
       }
     )
   }

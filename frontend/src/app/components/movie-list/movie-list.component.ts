@@ -2,8 +2,6 @@ import {Component, OnInit} from '@angular/core';
 import {MovieService} from "../../service/movie.service";
 import {MovieListItemModel} from "../../model/movie-list-item.model";
 import {Router} from "@angular/router";
-import {Subject} from "rxjs";
-import {MovieDetailsModel} from "../../model/movie-details.model";
 
 @Component({
   selector: 'app-movie-list',

@@ -6,10 +6,11 @@ import {MovieDetailsModel} from "../model/movie-details.model";
 import {FormInitDataModel} from "../model/form-init-data.model";
 import {MovieFormModel} from "../model/movie-form.model";
 
+const BASE_URL: string = 'http://localhost:8080/api/movies';
+
 @Injectable({providedIn: "root"})
 export class MovieService {
 
-  private BASE_URL: string = 'http://localhost:8080/api/movies';
   movieId?: number;
   resetForm = new Subject();
 
@@ -17,26 +18,26 @@ export class MovieService {
   }
 
   getMovies = (): Observable<MovieListItemModel[]> => {
-    return this.http.get<MovieListItemModel[]>(this.BASE_URL);
+    return this.http.get<MovieListItemModel[]>(BASE_URL);
   }
 
   getMovieById = (id: number): Observable<MovieDetailsModel> => {
-    return this.http.get<MovieDetailsModel>(`${this.BASE_URL}/${id}`);
+    return this.http.get<MovieDetailsModel>(`${BASE_URL}/${id}`);
   }
 
   deleteMovie = (id: number): Observable<any> => {
-    return this.http.delete(this.BASE_URL + '/' + id);
+    return this.http.delete(BASE_URL + '/' + id);
   }
 
   fetchFormInitData = (): Observable<FormInitDataModel> => {
-    return this.http.get<FormInitDataModel>(this.BASE_URL + '/formData');
+    return this.http.get<FormInitDataModel>(BASE_URL + '/formData');
   }
 
   sendMovieData = (data: MovieFormModel): Observable<any> => {
-    return this.http.post(this.BASE_URL, data);
+    return this.http.post(BASE_URL, data);
   }
 
   updateMovieData = (data: MovieFormModel): Observable<any> => {
-    return this.http.put(this.BASE_URL, data);
+    return this.http.put(BASE_URL, data);
   }
 }

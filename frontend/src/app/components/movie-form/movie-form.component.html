@@ -67,17 +67,9 @@
     >
   </div>
   <button
-    *ngIf="!detailsToUpdate"
     type="submit"
     [disabled]="form.invalid"
     class="btn btn-primary"
     (click)="onSubmitClick()">Submit
-  </button>
-  <button
-    *ngIf="detailsToUpdate"
-    type="submit"
-    [disabled]="form.invalid"
-    class="btn btn-primary"
-    (click)="onSubmitChangesClick()">Submit changes
   </button>
 </form>

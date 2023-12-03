@@ -4,6 +4,7 @@ import com.example.pmdb.domain.GenreType;
 import com.example.pmdb.domain.Movie;
 import com.example.pmdb.domain.RatingType;
 import com.example.pmdb.dto.incoming.CreateMovieCommand;
+import com.example.pmdb.dto.incoming.UpdateMovieCommand;
 import com.example.pmdb.dto.outgoing.GenreOption;
 import com.example.pmdb.dto.outgoing.MovieDetailsItem;
 import com.example.pmdb.dto.outgoing.MovieListItem;
@@ -63,6 +64,20 @@ public class MovieService {
             throw new EntityNotFoundException("Can't find movie with given id");
         }
         return new MovieDetailsItem(movie);
+    }
+
+    public void update(UpdateMovieCommand item) {
+        Movie movie = Movie
+                .builder()
+                .id(item.getId())
+                .title(item.getTitle())
+                .director(item.getDirector())
+                .year(item.getYear())
+                .genres(item.getGenres())
+                .rating(item.getRating())
+                .posterUrl(item.getPosterUrl())
+                .build();
+        movieRepository.save(movie);
     }
 
     public Movie getMovieById(Long id) {
